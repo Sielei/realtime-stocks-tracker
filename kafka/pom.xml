@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>kafka-model</module>
+        <module>kafka-admin</module>
+        <module>Kafka-producer</module>
     </modules>
 
 </project>
