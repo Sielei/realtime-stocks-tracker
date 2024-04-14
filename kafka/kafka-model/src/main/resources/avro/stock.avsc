@@ -16,18 +16,13 @@
     },
     {
       "name": "tradeValue",
-      "type": "string",
+      "type": "double",
       "doc": "The value the stock was traded for."
     },
     {
       "name": "currency",
       "type": "string",
       "doc": "The currency the stock was traded in."
-    },
-    {
-      "name": "description",
-      "type": "string",
-      "doc": "Description about the stock."
     },
     {
       "name": "tradeTime",
