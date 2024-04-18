@@ -18,6 +18,8 @@
         <module>yahoo-to-kafka-service</module>
         <module>kafka</module>
         <module>app-config</module>
+        <module>stocks-visualizer-webapp</module>
+        <module>kafka-to-sse-publisher</module>
     </modules>
     <properties>
         <java.version>17</java.version>
@@ -55,6 +57,11 @@
             <dependency>
                 <groupId>com.hs</groupId>
                 <artifactId>kafka-admin</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hs</groupId>
+                <artifactId>kafka-consumer</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
