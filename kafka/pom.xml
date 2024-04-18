@@ -15,6 +15,7 @@
         <module>kafka-model</module>
         <module>kafka-admin</module>
         <module>Kafka-producer</module>
+        <module>kafka-consumer</module>
     </modules>
 
 </project>
