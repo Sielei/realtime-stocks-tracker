@@ -12,7 +12,6 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
@@ -25,11 +24,13 @@ public class StocksKafkaConsumer implements KafkaConsumer<StockPrice> {
     private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
     private final KafkaAdminClient kafkaAdminClient;
     private final KafkaConfigData kafkaConfigData;
+    private final StocksService stocksService;
 
-    public StocksKafkaConsumer(KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry, KafkaAdminClient kafkaAdminClient, KafkaConfigData kafkaConfigData) {
+    public StocksKafkaConsumer(KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry, KafkaAdminClient kafkaAdminClient, KafkaConfigData kafkaConfigData, StocksService stocksService) {
         this.kafkaListenerEndpointRegistry = kafkaListenerEndpointRegistry;
         this.kafkaAdminClient = kafkaAdminClient;
         this.kafkaConfigData = kafkaConfigData;
+        this.stocksService = stocksService;
     }
 
     @EventListener(ApplicationStartedEvent.class)
@@ -42,10 +43,21 @@ public class StocksKafkaConsumer implements KafkaConsumer<StockPrice> {
     @Override
     @KafkaListener(id = "stocksListener", topics = "${kafka-config.topic-name}")
     public void receive(StockPrice message) {
-        //LOG.info("Messages : {}", message);
-
-        publish(new StocksQuote(message.getSymbol(), message.getExchange(), message.getTradeValue(),
-                message.getCurrency(), message.getTradeTime()));
+        LOG.info("Receiving message : {}", message);
+        publish(new StocksQuote(message.getSymbol(), message.getExchange(), message.getPrice(),
+                message.getDayHighPrice(), message.getDayLowPrice(), message.getPreviousClosePrice(),
+                message.getVolumeTraded(), message.getCurrency(), message.getTradeTime()));
+        stocksService.save(Stock.builder()
+                        .symbol(message.getSymbol())
+                        .exchange(message.getExchange())
+                        .price(message.getPrice())
+                        .dayHighPrice(message.getDayHighPrice())
+                        .dayLowPrice(message.getDayLowPrice())
+                        .previousClosePrice(message.getPreviousClosePrice())
+                        .volumeTraded(message.getVolumeTraded())
+                        .currency(message.getCurrency())
+                        .tradeTime((long) message.getTradeTime())
+                .build());
     }
 
     public void subscribe(Consumer<StocksQuote> listener){
@@ -55,8 +67,10 @@ public class StocksKafkaConsumer implements KafkaConsumer<StockPrice> {
     }
 
     public void publish(StocksQuote stockQuote) {
-        //LOG.info("Processing live stock price: {}", stockPrice);
+        LOG.info("Processing live stock price: {}", stockQuote);
         listeners.forEach(listener -> listener.accept(stockQuote));
     }
-    record StocksQuote(String symbol, String exchange, double tradeValue, String currency, Instant tradeTime){}
+    record StocksQuote(String symbol, String exchange, double price, double dayHighPrice,
+                       double dayLowPrice, double previousClosePrice, int volumeTraded,
+                       String currency, int tradeTime){}
 }

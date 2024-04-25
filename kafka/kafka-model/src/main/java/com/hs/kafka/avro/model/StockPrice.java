@@ -15,16 +15,13 @@ import org.apache.avro.message.SchemaStore;
 /** Avro schema for stock price */
 @org.apache.avro.specific.AvroGenerated
 public class StockPrice extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 673451867141827176L;
+  private static final long serialVersionUID = 6159348880968904287L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"StockPrice\",\"namespace\":\"com.hs.kafka.avro.model\",\"doc\":\"Avro schema for stock price\",\"fields\":[{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"The identifier of the stock.\"},{\"name\":\"exchange\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"The stock exchange the stock was traded.\"},{\"name\":\"tradeValue\",\"type\":\"double\",\"doc\":\"The value the stock was traded for.\"},{\"name\":\"currency\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"The currency the stock was traded in.\"},{\"name\":\"tradeTime\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"},\"doc\":\"Epoch millis timestamp at which the stock trade took place.\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"StockPrice\",\"namespace\":\"com.hs.kafka.avro.model\",\"doc\":\"Avro schema for stock price\",\"fields\":[{\"name\":\"symbol\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"The identifier of the stock.\"},{\"name\":\"exchange\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"The stock exchange the stock was traded.\"},{\"name\":\"price\",\"type\":\"double\",\"doc\":\"The value the stock was traded for.\"},{\"name\":\"dayHighPrice\",\"type\":\"double\",\"doc\":\"The highest value the stock was traded for on that day.\"},{\"name\":\"dayLowPrice\",\"type\":\"double\",\"doc\":\"The lowest value the stock was traded for on that day.\"},{\"name\":\"previousClosePrice\",\"type\":\"double\",\"doc\":\"The value the stock was traded for at the close of market.\"},{\"name\":\"volumeTraded\",\"type\":\"int\",\"doc\":\"The amount of stocks traded on that day.\"},{\"name\":\"currency\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"},\"doc\":\"The currency the stock was traded in.\"},{\"name\":\"tradeTime\",\"type\":\"int\",\"doc\":\"Epoch millis timestamp at which the stock trade took place.\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
-  static {
-    MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.TimestampMillisConversion());
-  }
 
   private static final BinaryMessageEncoder<StockPrice> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
@@ -82,11 +79,19 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
   /** The stock exchange the stock was traded. */
   private java.lang.String exchange;
   /** The value the stock was traded for. */
-  private double tradeValue;
+  private double price;
+  /** The highest value the stock was traded for on that day. */
+  private double dayHighPrice;
+  /** The lowest value the stock was traded for on that day. */
+  private double dayLowPrice;
+  /** The value the stock was traded for at the close of market. */
+  private double previousClosePrice;
+  /** The amount of stocks traded on that day. */
+  private int volumeTraded;
   /** The currency the stock was traded in. */
   private java.lang.String currency;
   /** Epoch millis timestamp at which the stock trade took place. */
-  private java.time.Instant tradeTime;
+  private int tradeTime;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -99,16 +104,24 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
    * All-args constructor.
    * @param symbol The identifier of the stock.
    * @param exchange The stock exchange the stock was traded.
-   * @param tradeValue The value the stock was traded for.
+   * @param price The value the stock was traded for.
+   * @param dayHighPrice The highest value the stock was traded for on that day.
+   * @param dayLowPrice The lowest value the stock was traded for on that day.
+   * @param previousClosePrice The value the stock was traded for at the close of market.
+   * @param volumeTraded The amount of stocks traded on that day.
    * @param currency The currency the stock was traded in.
    * @param tradeTime Epoch millis timestamp at which the stock trade took place.
    */
-  public StockPrice(java.lang.String symbol, java.lang.String exchange, java.lang.Double tradeValue, java.lang.String currency, java.time.Instant tradeTime) {
+  public StockPrice(java.lang.String symbol, java.lang.String exchange, java.lang.Double price, java.lang.Double dayHighPrice, java.lang.Double dayLowPrice, java.lang.Double previousClosePrice, java.lang.Integer volumeTraded, java.lang.String currency, java.lang.Integer tradeTime) {
     this.symbol = symbol;
     this.exchange = exchange;
-    this.tradeValue = tradeValue;
+    this.price = price;
+    this.dayHighPrice = dayHighPrice;
+    this.dayLowPrice = dayLowPrice;
+    this.previousClosePrice = previousClosePrice;
+    this.volumeTraded = volumeTraded;
     this.currency = currency;
-    this.tradeTime = tradeTime.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
+    this.tradeTime = tradeTime;
   }
 
   @Override
@@ -123,26 +136,15 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
     switch (field$) {
     case 0: return symbol;
     case 1: return exchange;
-    case 2: return tradeValue;
-    case 3: return currency;
-    case 4: return tradeTime;
+    case 2: return price;
+    case 3: return dayHighPrice;
+    case 4: return dayLowPrice;
+    case 5: return previousClosePrice;
+    case 6: return volumeTraded;
+    case 7: return currency;
+    case 8: return tradeTime;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
-  }
-
-  private static final org.apache.avro.Conversion<?>[] conversions =
-      new org.apache.avro.Conversion<?>[] {
-      null,
-      null,
-      null,
-      null,
-      new org.apache.avro.data.TimeConversions.TimestampMillisConversion(),
-      null
-  };
-
-  @Override
-  public org.apache.avro.Conversion<?> getConversion(int field) {
-    return conversions[field];
   }
 
   // Used by DatumReader.  Applications should not call.
@@ -152,9 +154,13 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
     switch (field$) {
     case 0: symbol = value$ != null ? value$.toString() : null; break;
     case 1: exchange = value$ != null ? value$.toString() : null; break;
-    case 2: tradeValue = (java.lang.Double)value$; break;
-    case 3: currency = value$ != null ? value$.toString() : null; break;
-    case 4: tradeTime = (java.time.Instant)value$; break;
+    case 2: price = (java.lang.Double)value$; break;
+    case 3: dayHighPrice = (java.lang.Double)value$; break;
+    case 4: dayLowPrice = (java.lang.Double)value$; break;
+    case 5: previousClosePrice = (java.lang.Double)value$; break;
+    case 6: volumeTraded = (java.lang.Integer)value$; break;
+    case 7: currency = value$ != null ? value$.toString() : null; break;
+    case 8: tradeTime = (java.lang.Integer)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -196,21 +202,93 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
   }
 
   /**
-   * Gets the value of the 'tradeValue' field.
+   * Gets the value of the 'price' field.
    * @return The value the stock was traded for.
    */
-  public double getTradeValue() {
-    return tradeValue;
+  public double getPrice() {
+    return price;
   }
 
 
   /**
-   * Sets the value of the 'tradeValue' field.
+   * Sets the value of the 'price' field.
    * The value the stock was traded for.
    * @param value the value to set.
    */
-  public void setTradeValue(double value) {
-    this.tradeValue = value;
+  public void setPrice(double value) {
+    this.price = value;
+  }
+
+  /**
+   * Gets the value of the 'dayHighPrice' field.
+   * @return The highest value the stock was traded for on that day.
+   */
+  public double getDayHighPrice() {
+    return dayHighPrice;
+  }
+
+
+  /**
+   * Sets the value of the 'dayHighPrice' field.
+   * The highest value the stock was traded for on that day.
+   * @param value the value to set.
+   */
+  public void setDayHighPrice(double value) {
+    this.dayHighPrice = value;
+  }
+
+  /**
+   * Gets the value of the 'dayLowPrice' field.
+   * @return The lowest value the stock was traded for on that day.
+   */
+  public double getDayLowPrice() {
+    return dayLowPrice;
+  }
+
+
+  /**
+   * Sets the value of the 'dayLowPrice' field.
+   * The lowest value the stock was traded for on that day.
+   * @param value the value to set.
+   */
+  public void setDayLowPrice(double value) {
+    this.dayLowPrice = value;
+  }
+
+  /**
+   * Gets the value of the 'previousClosePrice' field.
+   * @return The value the stock was traded for at the close of market.
+   */
+  public double getPreviousClosePrice() {
+    return previousClosePrice;
+  }
+
+
+  /**
+   * Sets the value of the 'previousClosePrice' field.
+   * The value the stock was traded for at the close of market.
+   * @param value the value to set.
+   */
+  public void setPreviousClosePrice(double value) {
+    this.previousClosePrice = value;
+  }
+
+  /**
+   * Gets the value of the 'volumeTraded' field.
+   * @return The amount of stocks traded on that day.
+   */
+  public int getVolumeTraded() {
+    return volumeTraded;
+  }
+
+
+  /**
+   * Sets the value of the 'volumeTraded' field.
+   * The amount of stocks traded on that day.
+   * @param value the value to set.
+   */
+  public void setVolumeTraded(int value) {
+    this.volumeTraded = value;
   }
 
   /**
@@ -235,7 +313,7 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
    * Gets the value of the 'tradeTime' field.
    * @return Epoch millis timestamp at which the stock trade took place.
    */
-  public java.time.Instant getTradeTime() {
+  public int getTradeTime() {
     return tradeTime;
   }
 
@@ -245,8 +323,8 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
    * Epoch millis timestamp at which the stock trade took place.
    * @param value the value to set.
    */
-  public void setTradeTime(java.time.Instant value) {
-    this.tradeTime = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
+  public void setTradeTime(int value) {
+    this.tradeTime = value;
   }
 
   /**
@@ -295,11 +373,19 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
     /** The stock exchange the stock was traded. */
     private java.lang.String exchange;
     /** The value the stock was traded for. */
-    private double tradeValue;
+    private double price;
+    /** The highest value the stock was traded for on that day. */
+    private double dayHighPrice;
+    /** The lowest value the stock was traded for on that day. */
+    private double dayLowPrice;
+    /** The value the stock was traded for at the close of market. */
+    private double previousClosePrice;
+    /** The amount of stocks traded on that day. */
+    private int volumeTraded;
     /** The currency the stock was traded in. */
     private java.lang.String currency;
     /** Epoch millis timestamp at which the stock trade took place. */
-    private java.time.Instant tradeTime;
+    private int tradeTime;
 
     /** Creates a new Builder */
     private Builder() {
@@ -320,17 +406,33 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
         this.exchange = data().deepCopy(fields()[1].schema(), other.exchange);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
-      if (isValidValue(fields()[2], other.tradeValue)) {
-        this.tradeValue = data().deepCopy(fields()[2].schema(), other.tradeValue);
+      if (isValidValue(fields()[2], other.price)) {
+        this.price = data().deepCopy(fields()[2].schema(), other.price);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.currency)) {
-        this.currency = data().deepCopy(fields()[3].schema(), other.currency);
+      if (isValidValue(fields()[3], other.dayHighPrice)) {
+        this.dayHighPrice = data().deepCopy(fields()[3].schema(), other.dayHighPrice);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
-      if (isValidValue(fields()[4], other.tradeTime)) {
-        this.tradeTime = data().deepCopy(fields()[4].schema(), other.tradeTime);
+      if (isValidValue(fields()[4], other.dayLowPrice)) {
+        this.dayLowPrice = data().deepCopy(fields()[4].schema(), other.dayLowPrice);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
+      }
+      if (isValidValue(fields()[5], other.previousClosePrice)) {
+        this.previousClosePrice = data().deepCopy(fields()[5].schema(), other.previousClosePrice);
+        fieldSetFlags()[5] = other.fieldSetFlags()[5];
+      }
+      if (isValidValue(fields()[6], other.volumeTraded)) {
+        this.volumeTraded = data().deepCopy(fields()[6].schema(), other.volumeTraded);
+        fieldSetFlags()[6] = other.fieldSetFlags()[6];
+      }
+      if (isValidValue(fields()[7], other.currency)) {
+        this.currency = data().deepCopy(fields()[7].schema(), other.currency);
+        fieldSetFlags()[7] = other.fieldSetFlags()[7];
+      }
+      if (isValidValue(fields()[8], other.tradeTime)) {
+        this.tradeTime = data().deepCopy(fields()[8].schema(), other.tradeTime);
+        fieldSetFlags()[8] = other.fieldSetFlags()[8];
       }
     }
 
@@ -348,17 +450,33 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
         this.exchange = data().deepCopy(fields()[1].schema(), other.exchange);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.tradeValue)) {
-        this.tradeValue = data().deepCopy(fields()[2].schema(), other.tradeValue);
+      if (isValidValue(fields()[2], other.price)) {
+        this.price = data().deepCopy(fields()[2].schema(), other.price);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.currency)) {
-        this.currency = data().deepCopy(fields()[3].schema(), other.currency);
+      if (isValidValue(fields()[3], other.dayHighPrice)) {
+        this.dayHighPrice = data().deepCopy(fields()[3].schema(), other.dayHighPrice);
         fieldSetFlags()[3] = true;
       }
-      if (isValidValue(fields()[4], other.tradeTime)) {
-        this.tradeTime = data().deepCopy(fields()[4].schema(), other.tradeTime);
+      if (isValidValue(fields()[4], other.dayLowPrice)) {
+        this.dayLowPrice = data().deepCopy(fields()[4].schema(), other.dayLowPrice);
         fieldSetFlags()[4] = true;
+      }
+      if (isValidValue(fields()[5], other.previousClosePrice)) {
+        this.previousClosePrice = data().deepCopy(fields()[5].schema(), other.previousClosePrice);
+        fieldSetFlags()[5] = true;
+      }
+      if (isValidValue(fields()[6], other.volumeTraded)) {
+        this.volumeTraded = data().deepCopy(fields()[6].schema(), other.volumeTraded);
+        fieldSetFlags()[6] = true;
+      }
+      if (isValidValue(fields()[7], other.currency)) {
+        this.currency = data().deepCopy(fields()[7].schema(), other.currency);
+        fieldSetFlags()[7] = true;
+      }
+      if (isValidValue(fields()[8], other.tradeTime)) {
+        this.tradeTime = data().deepCopy(fields()[8].schema(), other.tradeTime);
+        fieldSetFlags()[8] = true;
       }
     }
 
@@ -451,45 +569,217 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
     }
 
     /**
-      * Gets the value of the 'tradeValue' field.
+      * Gets the value of the 'price' field.
       * The value the stock was traded for.
       * @return The value.
       */
-    public double getTradeValue() {
-      return tradeValue;
+    public double getPrice() {
+      return price;
     }
 
 
     /**
-      * Sets the value of the 'tradeValue' field.
+      * Sets the value of the 'price' field.
       * The value the stock was traded for.
-      * @param value The value of 'tradeValue'.
+      * @param value The value of 'price'.
       * @return This builder.
       */
-    public com.hs.kafka.avro.model.StockPrice.Builder setTradeValue(double value) {
+    public com.hs.kafka.avro.model.StockPrice.Builder setPrice(double value) {
       validate(fields()[2], value);
-      this.tradeValue = value;
+      this.price = value;
       fieldSetFlags()[2] = true;
       return this;
     }
 
     /**
-      * Checks whether the 'tradeValue' field has been set.
+      * Checks whether the 'price' field has been set.
       * The value the stock was traded for.
-      * @return True if the 'tradeValue' field has been set, false otherwise.
+      * @return True if the 'price' field has been set, false otherwise.
       */
-    public boolean hasTradeValue() {
+    public boolean hasPrice() {
       return fieldSetFlags()[2];
     }
 
 
     /**
-      * Clears the value of the 'tradeValue' field.
+      * Clears the value of the 'price' field.
       * The value the stock was traded for.
       * @return This builder.
       */
-    public com.hs.kafka.avro.model.StockPrice.Builder clearTradeValue() {
+    public com.hs.kafka.avro.model.StockPrice.Builder clearPrice() {
       fieldSetFlags()[2] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'dayHighPrice' field.
+      * The highest value the stock was traded for on that day.
+      * @return The value.
+      */
+    public double getDayHighPrice() {
+      return dayHighPrice;
+    }
+
+
+    /**
+      * Sets the value of the 'dayHighPrice' field.
+      * The highest value the stock was traded for on that day.
+      * @param value The value of 'dayHighPrice'.
+      * @return This builder.
+      */
+    public com.hs.kafka.avro.model.StockPrice.Builder setDayHighPrice(double value) {
+      validate(fields()[3], value);
+      this.dayHighPrice = value;
+      fieldSetFlags()[3] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'dayHighPrice' field has been set.
+      * The highest value the stock was traded for on that day.
+      * @return True if the 'dayHighPrice' field has been set, false otherwise.
+      */
+    public boolean hasDayHighPrice() {
+      return fieldSetFlags()[3];
+    }
+
+
+    /**
+      * Clears the value of the 'dayHighPrice' field.
+      * The highest value the stock was traded for on that day.
+      * @return This builder.
+      */
+    public com.hs.kafka.avro.model.StockPrice.Builder clearDayHighPrice() {
+      fieldSetFlags()[3] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'dayLowPrice' field.
+      * The lowest value the stock was traded for on that day.
+      * @return The value.
+      */
+    public double getDayLowPrice() {
+      return dayLowPrice;
+    }
+
+
+    /**
+      * Sets the value of the 'dayLowPrice' field.
+      * The lowest value the stock was traded for on that day.
+      * @param value The value of 'dayLowPrice'.
+      * @return This builder.
+      */
+    public com.hs.kafka.avro.model.StockPrice.Builder setDayLowPrice(double value) {
+      validate(fields()[4], value);
+      this.dayLowPrice = value;
+      fieldSetFlags()[4] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'dayLowPrice' field has been set.
+      * The lowest value the stock was traded for on that day.
+      * @return True if the 'dayLowPrice' field has been set, false otherwise.
+      */
+    public boolean hasDayLowPrice() {
+      return fieldSetFlags()[4];
+    }
+
+
+    /**
+      * Clears the value of the 'dayLowPrice' field.
+      * The lowest value the stock was traded for on that day.
+      * @return This builder.
+      */
+    public com.hs.kafka.avro.model.StockPrice.Builder clearDayLowPrice() {
+      fieldSetFlags()[4] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'previousClosePrice' field.
+      * The value the stock was traded for at the close of market.
+      * @return The value.
+      */
+    public double getPreviousClosePrice() {
+      return previousClosePrice;
+    }
+
+
+    /**
+      * Sets the value of the 'previousClosePrice' field.
+      * The value the stock was traded for at the close of market.
+      * @param value The value of 'previousClosePrice'.
+      * @return This builder.
+      */
+    public com.hs.kafka.avro.model.StockPrice.Builder setPreviousClosePrice(double value) {
+      validate(fields()[5], value);
+      this.previousClosePrice = value;
+      fieldSetFlags()[5] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'previousClosePrice' field has been set.
+      * The value the stock was traded for at the close of market.
+      * @return True if the 'previousClosePrice' field has been set, false otherwise.
+      */
+    public boolean hasPreviousClosePrice() {
+      return fieldSetFlags()[5];
+    }
+
+
+    /**
+      * Clears the value of the 'previousClosePrice' field.
+      * The value the stock was traded for at the close of market.
+      * @return This builder.
+      */
+    public com.hs.kafka.avro.model.StockPrice.Builder clearPreviousClosePrice() {
+      fieldSetFlags()[5] = false;
+      return this;
+    }
+
+    /**
+      * Gets the value of the 'volumeTraded' field.
+      * The amount of stocks traded on that day.
+      * @return The value.
+      */
+    public int getVolumeTraded() {
+      return volumeTraded;
+    }
+
+
+    /**
+      * Sets the value of the 'volumeTraded' field.
+      * The amount of stocks traded on that day.
+      * @param value The value of 'volumeTraded'.
+      * @return This builder.
+      */
+    public com.hs.kafka.avro.model.StockPrice.Builder setVolumeTraded(int value) {
+      validate(fields()[6], value);
+      this.volumeTraded = value;
+      fieldSetFlags()[6] = true;
+      return this;
+    }
+
+    /**
+      * Checks whether the 'volumeTraded' field has been set.
+      * The amount of stocks traded on that day.
+      * @return True if the 'volumeTraded' field has been set, false otherwise.
+      */
+    public boolean hasVolumeTraded() {
+      return fieldSetFlags()[6];
+    }
+
+
+    /**
+      * Clears the value of the 'volumeTraded' field.
+      * The amount of stocks traded on that day.
+      * @return This builder.
+      */
+    public com.hs.kafka.avro.model.StockPrice.Builder clearVolumeTraded() {
+      fieldSetFlags()[6] = false;
       return this;
     }
 
@@ -510,9 +800,9 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
       * @return This builder.
       */
     public com.hs.kafka.avro.model.StockPrice.Builder setCurrency(java.lang.String value) {
-      validate(fields()[3], value);
+      validate(fields()[7], value);
       this.currency = value;
-      fieldSetFlags()[3] = true;
+      fieldSetFlags()[7] = true;
       return this;
     }
 
@@ -522,7 +812,7 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
       * @return True if the 'currency' field has been set, false otherwise.
       */
     public boolean hasCurrency() {
-      return fieldSetFlags()[3];
+      return fieldSetFlags()[7];
     }
 
 
@@ -533,7 +823,7 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
       */
     public com.hs.kafka.avro.model.StockPrice.Builder clearCurrency() {
       currency = null;
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[7] = false;
       return this;
     }
 
@@ -542,7 +832,7 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
       * Epoch millis timestamp at which the stock trade took place.
       * @return The value.
       */
-    public java.time.Instant getTradeTime() {
+    public int getTradeTime() {
       return tradeTime;
     }
 
@@ -553,10 +843,10 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
       * @param value The value of 'tradeTime'.
       * @return This builder.
       */
-    public com.hs.kafka.avro.model.StockPrice.Builder setTradeTime(java.time.Instant value) {
-      validate(fields()[4], value);
-      this.tradeTime = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
-      fieldSetFlags()[4] = true;
+    public com.hs.kafka.avro.model.StockPrice.Builder setTradeTime(int value) {
+      validate(fields()[8], value);
+      this.tradeTime = value;
+      fieldSetFlags()[8] = true;
       return this;
     }
 
@@ -566,7 +856,7 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
       * @return True if the 'tradeTime' field has been set, false otherwise.
       */
     public boolean hasTradeTime() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[8];
     }
 
 
@@ -576,7 +866,7 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
       * @return This builder.
       */
     public com.hs.kafka.avro.model.StockPrice.Builder clearTradeTime() {
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[8] = false;
       return this;
     }
 
@@ -587,9 +877,13 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
         StockPrice record = new StockPrice();
         record.symbol = fieldSetFlags()[0] ? this.symbol : (java.lang.String) defaultValue(fields()[0]);
         record.exchange = fieldSetFlags()[1] ? this.exchange : (java.lang.String) defaultValue(fields()[1]);
-        record.tradeValue = fieldSetFlags()[2] ? this.tradeValue : (java.lang.Double) defaultValue(fields()[2]);
-        record.currency = fieldSetFlags()[3] ? this.currency : (java.lang.String) defaultValue(fields()[3]);
-        record.tradeTime = fieldSetFlags()[4] ? this.tradeTime : (java.time.Instant) defaultValue(fields()[4]);
+        record.price = fieldSetFlags()[2] ? this.price : (java.lang.Double) defaultValue(fields()[2]);
+        record.dayHighPrice = fieldSetFlags()[3] ? this.dayHighPrice : (java.lang.Double) defaultValue(fields()[3]);
+        record.dayLowPrice = fieldSetFlags()[4] ? this.dayLowPrice : (java.lang.Double) defaultValue(fields()[4]);
+        record.previousClosePrice = fieldSetFlags()[5] ? this.previousClosePrice : (java.lang.Double) defaultValue(fields()[5]);
+        record.volumeTraded = fieldSetFlags()[6] ? this.volumeTraded : (java.lang.Integer) defaultValue(fields()[6]);
+        record.currency = fieldSetFlags()[7] ? this.currency : (java.lang.String) defaultValue(fields()[7]);
+        record.tradeTime = fieldSetFlags()[8] ? this.tradeTime : (java.lang.Integer) defaultValue(fields()[8]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -617,6 +911,99 @@ public class StockPrice extends org.apache.avro.specific.SpecificRecordBase impl
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    out.writeString(this.symbol);
+
+    out.writeString(this.exchange);
+
+    out.writeDouble(this.price);
+
+    out.writeDouble(this.dayHighPrice);
+
+    out.writeDouble(this.dayLowPrice);
+
+    out.writeDouble(this.previousClosePrice);
+
+    out.writeInt(this.volumeTraded);
+
+    out.writeString(this.currency);
+
+    out.writeInt(this.tradeTime);
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      this.symbol = in.readString();
+
+      this.exchange = in.readString();
+
+      this.price = in.readDouble();
+
+      this.dayHighPrice = in.readDouble();
+
+      this.dayLowPrice = in.readDouble();
+
+      this.previousClosePrice = in.readDouble();
+
+      this.volumeTraded = in.readInt();
+
+      this.currency = in.readString();
+
+      this.tradeTime = in.readInt();
+
+    } else {
+      for (int i = 0; i < 9; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          this.symbol = in.readString();
+          break;
+
+        case 1:
+          this.exchange = in.readString();
+          break;
+
+        case 2:
+          this.price = in.readDouble();
+          break;
+
+        case 3:
+          this.dayHighPrice = in.readDouble();
+          break;
+
+        case 4:
+          this.dayLowPrice = in.readDouble();
+          break;
+
+        case 5:
+          this.previousClosePrice = in.readDouble();
+          break;
+
+        case 6:
+          this.volumeTraded = in.readInt();
+          break;
+
+        case 7:
+          this.currency = in.readString();
+          break;
+
+        case 8:
+          this.tradeTime = in.readInt();
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
 
 

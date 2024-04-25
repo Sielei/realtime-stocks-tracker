@@ -15,9 +15,29 @@
       "doc": "The stock exchange the stock was traded."
     },
     {
-      "name": "tradeValue",
+      "name": "price",
       "type": "double",
       "doc": "The value the stock was traded for."
+    },
+    {
+      "name": "dayHighPrice",
+      "type": "double",
+      "doc": "The highest value the stock was traded for on that day."
+    },
+    {
+      "name": "dayLowPrice",
+      "type": "double",
+      "doc": "The lowest value the stock was traded for on that day."
+    },
+    {
+      "name": "previousClosePrice",
+      "type": "double",
+      "doc": "The value the stock was traded for at the close of market."
+    },
+    {
+      "name": "volumeTraded",
+      "type": "int",
+      "doc": "The amount of stocks traded on that day."
     },
     {
       "name": "currency",
@@ -26,10 +46,7 @@
     },
     {
       "name": "tradeTime",
-      "type": {
-        "type": "long",
-        "logicalType": "timestamp-millis"
-      },
+      "type": "int",
       "doc": "Epoch millis timestamp at which the stock trade took place."
     }
   ]

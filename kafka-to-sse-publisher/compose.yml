@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  postgresql:
+    image: postgres:15.6
+    environment:
+      - 'POSTGRES_DB=stocks_db'
+      - 'POSTGRES_PASSWORD=pass'
+      - 'POSTGRES_USER=stocks_user'
+
+    ports:
+      - '5432:5432'

@@ -1,6 +1,5 @@
 package com.hs.ytks.stocks;
 
-import com.hs.kafka.avro.model.StockPrice;
 import com.hs.kafka.producer.KafkaProducer;
 import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;

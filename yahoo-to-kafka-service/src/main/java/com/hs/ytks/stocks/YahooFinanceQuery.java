@@ -35,12 +35,20 @@ class YahooFinanceQuery {
         var tradeValue = ((LinkedHashMap<Object, Object>) metaDetails).get("regularMarketPrice");
         var currency = ((LinkedHashMap<Object, Object>) metaDetails).get("currency");
         var tradeTime = ((LinkedHashMap<Object, Object>) metaDetails).get("regularMarketTime");
+        var dayHighPrice = ((LinkedHashMap<Object, Object>) metaDetails).get("regularMarketDayHigh");
+        var dayLowPrice = ((LinkedHashMap<Object, Object>) metaDetails).get("regularMarketDayLow");
+        var previousClosePrice = ((LinkedHashMap<Object, Object>) metaDetails).get("previousClose");
+        var volumeTraded = ((LinkedHashMap<Object, Object>) metaDetails).get("regularMarketVolume");
         return StockPrice.newBuilder()
                 .setSymbol((String) symbol)
                 .setExchange((String) exchange)
-                .setTradeValue((Double) tradeValue)
+                .setPrice((Double) tradeValue)
+                .setDayHighPrice((Double) dayHighPrice)
+                .setDayLowPrice((Double) dayLowPrice)
+                .setPreviousClosePrice((Double) previousClosePrice)
+                .setVolumeTraded((Integer) volumeTraded)
                 .setCurrency((String) currency)
-                .setTradeTime(Instant.ofEpochSecond((Integer)tradeTime))
+                .setTradeTime((Integer) tradeTime)
                 .build();
     }
 
