@@ -3,6 +3,7 @@ package com.hs.ktsp;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.Instant;
 import java.util.UUID;
 
 @Getter
@@ -23,6 +24,6 @@ class Stock {
     private double dayLowPrice;
     private double previousClosePrice;
     private Integer volumeTraded;
-    private Long tradeTime;
+    private Instant tradeTime;
 
 }

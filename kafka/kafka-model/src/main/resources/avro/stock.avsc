@@ -46,7 +46,10 @@
     },
     {
       "name": "tradeTime",
-      "type": "int",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
       "doc": "Epoch millis timestamp at which the stock trade took place."
     }
   ]

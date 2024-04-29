@@ -12,6 +12,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.KafkaListenerEndpointRegistry;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
@@ -56,7 +57,7 @@ public class StocksKafkaConsumer implements KafkaConsumer<StockPrice> {
                         .previousClosePrice(message.getPreviousClosePrice())
                         .volumeTraded(message.getVolumeTraded())
                         .currency(message.getCurrency())
-                        .tradeTime((long) message.getTradeTime())
+                        .tradeTime(message.getTradeTime())
                 .build());
     }
 
@@ -72,5 +73,5 @@ public class StocksKafkaConsumer implements KafkaConsumer<StockPrice> {
     }
     record StocksQuote(String symbol, String exchange, double price, double dayHighPrice,
                        double dayLowPrice, double previousClosePrice, int volumeTraded,
-                       String currency, int tradeTime){}
+                       String currency, Instant tradeTime){}
 }

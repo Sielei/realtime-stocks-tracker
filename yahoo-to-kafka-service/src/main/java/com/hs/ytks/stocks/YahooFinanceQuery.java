@@ -48,7 +48,7 @@ class YahooFinanceQuery {
                 .setPreviousClosePrice((Double) previousClosePrice)
                 .setVolumeTraded((Integer) volumeTraded)
                 .setCurrency((String) currency)
-                .setTradeTime((Integer) tradeTime)
+                .setTradeTime(Instant.ofEpochSecond((Integer) tradeTime))
                 .build();
     }
 
