@@ -24,10 +24,10 @@ window.onload = function () {
         eventSource.addEventListener('stockQuote', (event) => {
             const symbol = JSON.parse(event.data).symbol;
             const time = JSON.parse(event.data).tradeTime;
-            const tradeValue = JSON.parse(event.data).tradeValue;
+            const price = JSON.parse(event.data).price;
             if (symbol === 'AAPL'){
                 xVal = new Date(time);
-                yVal = tradeValue;
+                yVal = price;
                 if (!checkIfDPExists(dps, xVal)){
                     dps.push({x:xVal, y: yVal});
                 }
