@@ -30,8 +30,7 @@ public class YahooStocksStreamRunner implements KafkaStreamRunner {
     @Override
     public void start() {
         var tickers = yahooToKafkaConfigData.getStockSymbols();
-        var pool = Runtime.getRuntime().availableProcessors();
-        var executor = Executors.newFixedThreadPool(pool);
+        var executor = Executors.newSingleThreadExecutor();
         while (true){
             for (var ticker: tickers){
                 executor.execute(() ->{
