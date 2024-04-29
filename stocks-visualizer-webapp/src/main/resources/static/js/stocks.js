@@ -1,12 +1,26 @@
 window.onload = function () {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
     let dps = [];
     let chart = new CanvasJS.Chart('container', {
+        animationEnabled: true,
+        theme: 'light2',
+        exportEnabled: true,
+        zoomEnabled: true,
         title: {
             text: 'Realtime Stock Prices'
         },
+        axisY: {
+            prefix: '$',
+            title: 'Price'
+        },
+        toolTip: {
+            content: "Date: {x}<br /><strong>Price:</strong><br />Open: {y[0]}, Close: {y[3]}<br />High: {y[1]}, Low: {y[2]}"
+        },
         data: [
             {
-                type: 'line',
+                type: 'candlestick',
                 dataPoints: dps
             }
         ]
@@ -15,7 +29,7 @@ window.onload = function () {
     let xVal = new Date();
     let yVal = 0;
     let updateInterval = 1000;
-    let dataLength = 20;
+    let dataLength = 100;
     
     let updateChart = function (count) {
         count = count || 1;
@@ -25,11 +39,22 @@ window.onload = function () {
             const symbol = JSON.parse(event.data).symbol;
             const time = JSON.parse(event.data).tradeTime;
             const price = JSON.parse(event.data).price;
-            if (symbol === 'AAPL'){
+            const close = JSON.parse(event.data).previousClosePrice;
+            const high = JSON.parse(event.data).dayHighPrice;
+            const low = JSON.parse(event.data).dayLowPrice;
+            if (symbol === params.symbol){
                 xVal = new Date(time);
                 yVal = price;
                 if (!checkIfDPExists(dps, xVal)){
-                    dps.push({x:xVal, y: yVal});
+                    dps.push({
+                        x:xVal,
+                        y: [
+                            price,
+                            close,
+                            high,
+                            low
+                        ]
+                    });
                 }
             }
         });
