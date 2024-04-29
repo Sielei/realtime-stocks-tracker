@@ -12,7 +12,10 @@ class StocksService {
         this.stockRepository = stockRepository;
     }
 
-    Stock save(Stock stock){
-        return stockRepository.save(stock);
+    void save(Stock stock){
+        var existingStock = stockRepository.findBySymbolAndTradeTime(stock.getSymbol(), stock.getTradeTime());
+        if (existingStock.isEmpty()){
+            stockRepository.save(stock);
+        }
     }
 }
